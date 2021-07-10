@@ -5,7 +5,6 @@ namespace POSClasses
     {
         public Stock Item { get; set; }
         public float Quantity { get; set; }
-        public float Tax { get; set; } = 18.0f;
         public double Total { get; set; }
 
         public InvoiceLine(Stock item, float quantity)
@@ -14,27 +13,52 @@ namespace POSClasses
             Quantity = quantity;
 
             //Desconta a quantidade do stock:
-            float newStock = Item.StockQuantity - Quantity;
+            Item.RemoveFromStock(quantity);
 
-            if (newStock >= 0)
-            {
-                Item.StockQuantity = newStock;
-            } else
-            {
-                Quantity = 0;
-            }
+            // Calculate the value per line
+            Calculate();
         }
 
-        public InvoiceLine() { }
+        public bool SetQuantity(float qtd)
+        {
+            if(qtd > 0)
+            {
+                if (Quantity < qtd)
+                {
+                    //Verify is we have enougth in stock
+                    bool verify = Item.RemoveFromStock(qtd-Quantity);
+
+                    if (verify)
+                    {
+                        //OK, the stock was updated sucessfully
+                        Quantity = qtd;
+                        Calculate();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                } else
+                {
+                    Item.AddToStock(Quantity - qtd);
+                    Quantity = qtd;
+                    Calculate();
+                    return true; 
+                }
+            }
+            return false;
+        }
 
         public void Calculate()
         {
-            Total = ((Item.StockProduct.Price * Quantity) * Tax) + Item.StockProduct.Price * Quantity;
+            Total = ((Item.Article.Price * Quantity) * Item.Article.Category.DefaultTax) + Item.Article.Price * Quantity;
         }
 
         public override string ToString()
         {
-            return $"Product: {Item.StockProduct.Name}, QTD: {Quantity}, Tax: {Tax}, Total Amount: {Total}";
+            return $"Product: {Item.Article.Name}, QTD: {Quantity}, Tax: {Item.Article.Category.DefaultTax}, Total Amount: {Total}";
         }
     }
 }

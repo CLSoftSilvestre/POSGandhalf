@@ -3,8 +3,10 @@ namespace POSClasses
 {
     public class Stock
     {
-        public Product StockProduct { get; set; }
-        public float StockQuantity { get; set; }
+        public int Id { get; set; }
+        public Product Article { get; set; }
+        public float Quantity { get; set; }
+        public DateTime LastUpdate { get; set; }
 
         public Stock()
         {
@@ -12,7 +14,33 @@ namespace POSClasses
 
         public void UpdateQuantity(float qtd)
         {
-            StockQuantity = qtd;
+            if( Quantity != qtd)
+            {
+                Quantity = qtd;
+                LastUpdate = DateTime.Now;
+            }  
+        }
+
+        public void AddToStock(float qtd)
+        {
+            if (qtd > 0)
+            {
+                Quantity += qtd;
+                LastUpdate = DateTime.Now;
+            }
+        }
+
+        public bool RemoveFromStock(float qtd)
+        {
+            if( Quantity - qtd >= 0)
+            {
+                Quantity -= qtd;
+                LastUpdate = DateTime.Now;
+                return true;
+            } else
+            {
+                return false;
+            }
         }
     }
 }

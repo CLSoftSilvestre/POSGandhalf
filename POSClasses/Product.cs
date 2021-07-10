@@ -10,6 +10,7 @@ namespace POSClasses
         public string Name { get; set; }
         public string Description { get; set; }
         public float Price { get; set; }
+        public ProductCategory Category { get; set; }
 
         public override string ToString()
         {

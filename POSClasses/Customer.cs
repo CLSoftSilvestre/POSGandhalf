@@ -1,12 +1,8 @@
 ﻿using System;
 namespace POSClasses
 {
-    public class Customer
+    public class Customer : Person
     {
-        public int CustomerId { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
         public int VAT { get; set; }
 
         public Customer()
