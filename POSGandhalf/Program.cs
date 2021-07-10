@@ -18,20 +18,20 @@ namespace POSGandhalf
             User.Login("csilvestre", "1234");
 
             // Criacao da categoria de produto
-            ProductCategory MerceariaProdCat = new ProductCategory() { ProductCategoryId = 1, ProductCategoryDescription = "Mercearia", ProductCategoryDefaultTax = 0.18f };
+            ProductCategory MerceariaProdCat = new ProductCategory() { Id = 1, Description = "Mercearia", DefaultTax = 0.18f, SellingUnit = Unit.Kg };
 
             // Criacao de produto
             Product Banana = new Product(){ProductId=1, Name="Bananas", Description = "Banana da Madeira", Price=12.5f, Category=MerceariaProdCat};
             Product Maracujá = new Product() { ProductId = 2, Name = "Maracujá", Description = "Maracujá dos Açores", Price = 26.99f, Category=MerceariaProdCat};
 
             // Criacao de stock para produto
-            Stock StockBanana = new Stock() { StockProduct = Banana, StockQuantity = 12 };
-            Stock StockMaracujá = new Stock() { StockProduct = Maracujá, StockQuantity = 3 };
+            Stock StockBanana = new Stock() { Article = Banana, Quantity = 12 };
+            Stock StockMaracujá = new Stock() { Article = Maracujá, Quantity = 3 };
 
             // Stock Inicial de produtos na Loja
             Console.WriteLine("---- Stock Inicial ----");
-            Console.WriteLine(StockBanana.StockProduct.Name + "  -  " + StockBanana.StockQuantity);
-            Console.WriteLine(StockMaracujá.StockProduct.Name + "  -  " + StockMaracujá.StockQuantity);
+            Console.WriteLine(StockBanana.Article.Name + "  -  " + StockBanana.Quantity);
+            Console.WriteLine(StockMaracujá.Article.Name + "  -  " + StockMaracujá.Quantity);
             Console.WriteLine("----------------------");
             Console.WriteLine();
 
@@ -51,6 +51,9 @@ namespace POSGandhalf
                 Fatura1.AddLine(LinhaFatura1);
                 Fatura1.AddLine(LinhaFatura2);
 
+                // Atualizar quantidade de produtos da linha 1
+                LinhaFatura1.SetQuantity(5);
+
                 // Marcar a fatura como finalizada (caso seja passado true o método imprime a fatura... Neste caso para o console...)
                 Console.WriteLine("----- IMPRIMIR FATURA -----");
                 Fatura1.Finalize(true);
@@ -59,10 +62,10 @@ namespace POSGandhalf
 
             }
 
-            //Ver se stock atualizou
+            // Ver se stock atualizou
             Console.WriteLine("----- Novo Stock -----");
-            Console.WriteLine(StockBanana.StockProduct.Name + "  -  " + StockBanana.StockQuantity);
-            Console.WriteLine(StockMaracujá.StockProduct.Name + "  -  " + StockMaracujá.StockQuantity);
+            Console.WriteLine(StockBanana.Article.Name + "  -  " + StockBanana.Quantity);
+            Console.WriteLine(StockMaracujá.Article.Name + "  -  " + StockMaracujá.Quantity);
             Console.WriteLine("----------------------");
             Console.WriteLine();
         }

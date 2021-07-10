@@ -50,18 +50,28 @@ namespace POSClasses
             Console.WriteLine($"Address: {InvoiceCustomer.Address}");
             Console.WriteLine($"Phone: {InvoiceCustomer.Phone}");
             Console.WriteLine($"VAT: {InvoiceCustomer.VAT}");
-            Console.WriteLine($"Data da Fatura: { InvoiceDate}");
+            Console.WriteLine($"Invoice date: { InvoiceDate}");
 
             // Imprime as linhas da fatura
-            Console.WriteLine("Linhas");
+            Console.WriteLine("Lines");
             for (int x=0; x<InvoiceLines.Count; x++)
             {
-                Console.WriteLine($"Produto: {InvoiceLines[x].Item.StockProduct.Name}, Qtd: {InvoiceLines[x].Quantity}, Price: {InvoiceLines[x].Total}");
+                Console.WriteLine($"Product: {InvoiceLines[x].Item.Article.Name}, Qty: {InvoiceLines[x].Quantity}, Unit: {InvoiceLines[x].Item.Article.Category.SellingUnit}, Price: {ConvertToMoney(InvoiceLines[x].Item.Article.Price)}, Tax: {ConvertToPercentage(InvoiceLines[x].Item.Article.Category.DefaultTax)}, Subtotal: {ConvertToMoney(InvoiceLines[x].Total)}");
             }
-            Console.WriteLine("Total: " + TotalAmount);
+            Console.WriteLine("Total amount: " + ConvertToMoney(TotalAmount));
 
-            Console.WriteLine($"Faturado por {InvoicedBy.FirstName} {InvoicedBy.LastName}");
+            Console.WriteLine($"Invoiced by {InvoicedBy.FirstName} {InvoicedBy.LastName}");
 
+        }
+
+        public static string ConvertToMoney(double Value)
+        {
+            return string.Format("{0:#.00€}", Convert.ToDecimal(Value));
+        }
+
+        public static string ConvertToPercentage(float Value)
+        {
+            return string.Format("{0:#.0%}", Convert.ToDecimal(Value));
         }
     }
 }
