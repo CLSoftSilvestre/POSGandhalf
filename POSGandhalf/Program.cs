@@ -11,6 +11,12 @@ namespace POSGandhalf
             Console.WriteLine("POSGrandhalf!");
             Console.WriteLine();
 
+            // Criacao de um utilizador de POS
+            User utilizador1 = new User() { UserLoginName= "csilvestre", UserPassword = "1234", FirstName="Celso", LastName="Silvestre" };
+
+            // Fazer login (Simulado uma vez que ainda não tenho EntityFramework...
+            User.Login("csilvestre", "1234");
+
             // Criacao da categoria de produto
             ProductCategory MerceariaProdCat = new ProductCategory() { ProductCategoryId = 1, ProductCategoryDescription = "Mercearia", ProductCategoryDefaultTax = 0.18f };
 
@@ -30,22 +36,28 @@ namespace POSGandhalf
             Console.WriteLine();
 
             // Criação de um Cliente
-            Customer Cliente1 = new Customer() { Name = "Celso Silvestre", Address = "Alameda de Belem", CustomerId = 1, Phone = "912152324", VAT = 228885884 };
+            Customer Cliente1 = new Customer() { FirstName = "Celso", LastName="Silvestre", Address = "Alameda de Belem", Id = 1, Phone = "912152324", VAT = 228885884 };
 
-            // Criação das linhas de fatura
-            InvoiceLine LinhaFatura1 = new InvoiceLine(StockBanana, 2);
-            InvoiceLine LinhaFatura2 = new InvoiceLine(StockMaracujá, 1);
+            // Apenas efectuar a faturação caso o tulizador tenha o login efectuado
 
-            // Criacao de uma fatura e adicao das linhas
-            Invoice Fatura1 = new Invoice() { InvoiceCustomer = Cliente1 };
-            Fatura1.AddLine(LinhaFatura1);
-            Fatura1.AddLine(LinhaFatura2);
+            if (User.UserHasLoginActive())
+            {
+                // Criação das linhas de fatura
+                InvoiceLine LinhaFatura1 = new InvoiceLine(StockBanana, 2);
+                InvoiceLine LinhaFatura2 = new InvoiceLine(StockMaracujá, 1);
 
-            // Marcar a fatura como finalizada (caso seja passado true o método imprime a fatura... Neste caso para o console...)
-            Console.WriteLine("----- IMPRIMIR FATURA -----");
-            Fatura1.Finalize(true);
-            Console.WriteLine("----- FIM DA FATURA -----");
-            Console.WriteLine();
+                // Criacao de uma fatura e adicao das linhas
+                Invoice Fatura1 = new Invoice() { InvoiceCustomer = Cliente1, InvoicedBy=utilizador1};
+                Fatura1.AddLine(LinhaFatura1);
+                Fatura1.AddLine(LinhaFatura2);
+
+                // Marcar a fatura como finalizada (caso seja passado true o método imprime a fatura... Neste caso para o console...)
+                Console.WriteLine("----- IMPRIMIR FATURA -----");
+                Fatura1.Finalize(true);
+                Console.WriteLine("----- FIM DA FATURA -----");
+                Console.WriteLine();
+
+            }
 
             //Ver se stock atualizou
             Console.WriteLine("----- Novo Stock -----");

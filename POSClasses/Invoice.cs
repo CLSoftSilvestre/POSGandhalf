@@ -11,6 +11,7 @@ namespace POSClasses
         public double TotalAmount {get; set;}
         public DateTime InvoiceDate { get; }
         public bool inProgress { get; set; } = true;
+        public User InvoicedBy { get; set; }
 
         public Invoice()
         {
@@ -37,7 +38,7 @@ namespace POSClasses
 
         public void Finalize(bool print)
         {
-            //Set the invoice as finalized and git a number... Optionaly can print.
+            //Set the invoice as finalized and give a number... Optionaly can print.
             inProgress = false;
             if (print)
                 Print();
@@ -45,7 +46,7 @@ namespace POSClasses
 
         public void Print()
         {
-            Console.WriteLine($"Client: {InvoiceCustomer.Name}");
+            Console.WriteLine($"Client: {InvoiceCustomer.FirstName} {InvoiceCustomer.LastName}");
             Console.WriteLine($"Address: {InvoiceCustomer.Address}");
             Console.WriteLine($"Phone: {InvoiceCustomer.Phone}");
             Console.WriteLine($"VAT: {InvoiceCustomer.VAT}");
@@ -58,6 +59,8 @@ namespace POSClasses
                 Console.WriteLine($"Produto: {InvoiceLines[x].Item.StockProduct.Name}, Qtd: {InvoiceLines[x].Quantity}, Price: {InvoiceLines[x].Total}");
             }
             Console.WriteLine("Total: " + TotalAmount);
+
+            Console.WriteLine($"Faturado por {InvoicedBy.FirstName} {InvoicedBy.LastName}");
 
         }
     }
