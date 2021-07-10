@@ -5,7 +5,6 @@ namespace POSClasses
     {
         public Stock Item { get; set; }
         public float Quantity { get; set; }
-        public float Tax { get; set; } = 18.0f;
         public double Total { get; set; }
 
         public InvoiceLine(Stock item, float quantity)
@@ -23,18 +22,19 @@ namespace POSClasses
             {
                 Quantity = 0;
             }
-        }
 
-        public InvoiceLine() { }
+            // Calculate the value per line
+            Calculate();
+        }
 
         public void Calculate()
         {
-            Total = ((Item.StockProduct.Price * Quantity) * Tax) + Item.StockProduct.Price * Quantity;
+            Total = ((Item.StockProduct.Price * Quantity) * Item.StockProduct.Category.ProductCategoryDefaultTax) + Item.StockProduct.Price * Quantity;
         }
 
         public override string ToString()
         {
-            return $"Product: {Item.StockProduct.Name}, QTD: {Quantity}, Tax: {Tax}, Total Amount: {Total}";
+            return $"Product: {Item.StockProduct.Name}, QTD: {Quantity}, Tax: {Item.StockProduct.Category.ProductCategoryDefaultTax}, Total Amount: {Total}";
         }
     }
 }

@@ -6,7 +6,7 @@ namespace POSClasses
     public class Invoice
     {
         public int InvoiceNumber { get; set; }
-        public List<InvoiceLine> InvoiceLines { get; set; }
+        public List<InvoiceLine> InvoiceLines { get; set; } = new List<InvoiceLine>();
         public Customer InvoiceCustomer { get; set; }
         public double TotalAmount {get; set;}
         public DateTime InvoiceDate { get; }
@@ -29,7 +29,7 @@ namespace POSClasses
 
             for (int x=0; x< InvoiceLines.Count; x++)
             {
-                InvoiceLines[x].Calculate();
+                //InvoiceLines[x].Calculate();
                 temp += InvoiceLines[x].Total;
             }
             TotalAmount = temp;
@@ -49,6 +49,7 @@ namespace POSClasses
             Console.WriteLine($"Address: {InvoiceCustomer.Address}");
             Console.WriteLine($"Phone: {InvoiceCustomer.Phone}");
             Console.WriteLine($"VAT: {InvoiceCustomer.VAT}");
+            Console.WriteLine($"Data da Fatura: { InvoiceDate}");
 
             // Imprime as linhas da fatura
             Console.WriteLine("Linhas");
@@ -56,8 +57,7 @@ namespace POSClasses
             {
                 Console.WriteLine($"Produto: {InvoiceLines[x].Item.StockProduct.Name}, Qtd: {InvoiceLines[x].Quantity}, Price: {InvoiceLines[x].Total}");
             }
-            Console.WriteLine("Total");
-            Console.WriteLine(TotalAmount);
+            Console.WriteLine("Total: " + TotalAmount);
 
         }
     }
