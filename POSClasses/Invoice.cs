@@ -10,6 +10,7 @@ namespace POSClasses
         public Customer InvoiceCustomer { get; set; }
         public double TotalAmount {get; set;}
         public DateTime InvoiceDate { get; }
+        public bool inProgress { get; set; } = true;
 
         public Invoice()
         {
@@ -19,6 +20,7 @@ namespace POSClasses
         public void AddLine(InvoiceLine line)
         {
             InvoiceLines.Add(line);
+            Calculate();
         }
 
         public void Calculate()
@@ -31,6 +33,14 @@ namespace POSClasses
                 temp += InvoiceLines[x].Total;
             }
             TotalAmount = temp;
+        }
+
+        public void Finalize(bool print)
+        {
+            //Set the invoice as finalized and git a number... Optionaly can print.
+            inProgress = false;
+            if (print)
+                Print();
         }
 
         public void Print()
