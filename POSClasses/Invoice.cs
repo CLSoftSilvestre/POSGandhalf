@@ -52,7 +52,7 @@ namespace POSClasses
             Console.WriteLine($"VAT: {InvoiceCustomer.VAT}");
             Console.WriteLine($"Invoice date: { InvoiceDate}");
 
-            // Imprime as linhas da fatura
+            // Print invoice lines
             Console.WriteLine("Lines");
             for (int x=0; x<InvoiceLines.Count; x++)
             {
