@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using POSClasses;
+using Widgets;
 
 namespace POSGandhalf
 {
     class Program
     {
+        static Screen Screen1 = new Screen();
+        static readonly ConsoleColor PRIMARY_COLOR = ConsoleColor.White;
+        static readonly ConsoleColor SECONDARY_COLOR = ConsoleColor.DarkBlue;
+
         static void Main(string[] args)
         {
+            SetupScreen();
+
+            //Codigo para ignorar
             Console.WriteLine("POSGrandhalf!");
             Console.WriteLine();
 
@@ -104,5 +112,67 @@ namespace POSGandhalf
             Console.WriteLine("----------------------");
             Console.WriteLine();
         }
+
+        static void SetupScreen()
+        {
+            // Adds one background to the screen app
+            Background bg = new Background(0, 0, 120, 30, SECONDARY_COLOR, BackgroundType.Light);
+            Screen1.Add(bg);
+
+            // Adds one main menu to the app and sets the events
+            List<MenuItem> AdminMenuItems = new();
+
+            MenuItem LoginMnuItem = new MenuItem("Login");
+            LoginMnuItem.Selected += LoginMnuItem_Selected;
+            AdminMenuItems.Add(LoginMnuItem);
+
+            MenuItem LogoutMnuItem = new MenuItem("Logout");
+            LogoutMnuItem.Selected += LogoutMnuItem_Selected;  
+            AdminMenuItems.Add(LogoutMnuItem);
+
+            MenuItem NewUserMnuItem = new MenuItem("Criar novo utilizador");
+            NewUserMnuItem.Selected += NewUserMnuItem_Selected;
+            AdminMenuItems.Add(NewUserMnuItem);
+
+            MenuItem ExitAppMnuItem = new MenuItem("Sair da aplicação");
+            ExitAppMnuItem.Selected += ExitAppMnuItem_Selected;
+            AdminMenuItems.Add(ExitAppMnuItem);
+
+            // Created the Menu for administration
+            Menu LoginMnu = new Menu("Menu de administração", AdminMenuItems);
+            LoginMnu.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
+
+            // Set the login menu to the Screen and wait for the selection of the user
+            Screen1.Add(LoginMnu);
+            Screen1.Render();
+            LoginMnu.Select();
+        }
+
+        private static void ExitAppMnuItem_Selected(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        private static void NewUserMnuItem_Selected(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void LogoutMnuItem_Selected(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void LoginMnuItem_Selected(object sender, EventArgs e)
+        {
+            // Draw Login Form
+            Form frmLogin = new(100, 15, "Login", Screen1);
+            frmLogin.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
+            Screen1.Add(frmLogin);
+            Screen1.Render();
+            Console.ReadKey();
+            frmLogin.Dispose(Screen1);
+        }
+
     }
 }
