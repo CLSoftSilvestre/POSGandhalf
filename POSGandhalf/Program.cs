@@ -118,7 +118,11 @@ namespace POSGandhalf
             // Adds one background to the screen app
             Background bg = new Background(0, 0, 120, 30, SECONDARY_COLOR, BackgroundType.Light);
             Screen1.Add(bg);
+            AdministrationMenu();
+        }
 
+        static void AdministrationMenu()
+        {
             // Adds one main menu to the app and sets the events
             List<MenuItem> AdminMenuItems = new();
 
@@ -126,26 +130,53 @@ namespace POSGandhalf
             LoginMnuItem.Selected += LoginMnuItem_Selected;
             AdminMenuItems.Add(LoginMnuItem);
 
-            MenuItem LogoutMnuItem = new MenuItem("Logout");
-            LogoutMnuItem.Selected += LogoutMnuItem_Selected;  
-            AdminMenuItems.Add(LogoutMnuItem);
-
-            MenuItem NewUserMnuItem = new MenuItem("Criar novo utilizador");
-            NewUserMnuItem.Selected += NewUserMnuItem_Selected;
-            AdminMenuItems.Add(NewUserMnuItem);
-
-            MenuItem ExitAppMnuItem = new MenuItem("Sair da aplicação");
+            MenuItem ExitAppMnuItem = new MenuItem("Exit application");
             ExitAppMnuItem.Selected += ExitAppMnuItem_Selected;
             AdminMenuItems.Add(ExitAppMnuItem);
 
             // Created the Menu for administration
-            Menu LoginMnu = new Menu("Menu de administração", AdminMenuItems);
+            Menu LoginMnu = new Menu("Admin Menu", AdminMenuItems);
             LoginMnu.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
 
             // Set the login menu to the Screen and wait for the selection of the user
             Screen1.Add(LoginMnu);
             Screen1.Render();
             LoginMnu.Select();
+
+        }
+
+        static void InvoiceMenu()
+        {
+            // Adds one main menu to the app and sets the events
+            List<MenuItem> InvoiceMenuItems = new();
+
+            MenuItem NewInvoiceMnuItem = new MenuItem("New Invoice");
+            //LoginMnuItem.Selected += LoginMnuItem_Selected;
+            InvoiceMenuItems.Add(NewInvoiceMnuItem);
+
+            MenuItem ViewStockMnuItem = new MenuItem("View Stock");
+            //LoginMnuItem.Selected += LoginMnuItem_Selected;
+            InvoiceMenuItems.Add(ViewStockMnuItem);
+
+            MenuItem BackMnuItem = new MenuItem("Back");
+            BackMnuItem.Selected += BackMnuItem_Selected;
+            InvoiceMenuItems.Add(BackMnuItem);
+
+            // Created the Menu for administration
+            Menu LoginMnu = new Menu("Invoice Menu", InvoiceMenuItems);
+            LoginMnu.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
+
+            // Set the login menu to the Screen and wait for the selection of the user
+            Screen1.Add(LoginMnu);
+            Screen1.Render();
+            LoginMnu.Select();
+
+        }
+
+        private static void BackMnuItem_Selected(object sender, EventArgs e)
+        {
+            //Do noting and get back
+            AdministrationMenu();
         }
 
         private static void ExitAppMnuItem_Selected(object sender, EventArgs e)
@@ -153,25 +184,43 @@ namespace POSGandhalf
             Environment.Exit(0);
         }
 
-        private static void NewUserMnuItem_Selected(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void LogoutMnuItem_Selected(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private static void LoginMnuItem_Selected(object sender, EventArgs e)
         {
             // Draw Login Form
-            Form frmLogin = new(100, 15, "Login", Screen1);
+            Form frmLogin = new(50, 15, "Login", Screen1);
             frmLogin.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
+
+            // Draw TextBoxes for UserName and Password
+            TextBox txtUsername = new TextBox(50, 11, 20, "Username");
+            txtUsername.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
+            frmLogin.Add(txtUsername);
+
+            TextBox txtPassword = new TextBox(50, 16, 20, "Password");
+            txtPassword.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
+            frmLogin.Add(txtPassword);
+
+            // Add form to screen and render the screen 
             Screen1.Add(frmLogin);
             Screen1.Render();
-            Console.ReadKey();
+
+            // Go to controls to input the values
+            string Username = txtUsername.Select();
+            string Password = txtPassword.Select();
+
+            // Clear form form screen
             frmLogin.Dispose(Screen1);
+
+            // If Login successfull goto second menu else msgbox and return
+            if(Username == "csilvestre" && Password == "1234")
+            {
+                //Goto second menu
+                InvoiceMenu();
+            } else
+            {
+                MsgBox InvalidLogin = new MsgBox("ERROR", "Invalid login. Please provide one valid Username and Password.");
+                InvalidLogin.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
+                InvalidLogin.Show(Screen1);
+            }
         }
 
     }
