@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POSGandhalf", "POSGandhalf\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POSClasses", "POSClasses\POSClasses.csproj", "{6E0E5EF2-B159-44C5-9089-9F6E30BD6E30}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Widgets", "..\ConsoleWidgets\Widgets\Widgets.csproj", "{FE231B36-3848-4575-9F62-D59F643C8B1D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{6E0E5EF2-B159-44C5-9089-9F6E30BD6E30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E0E5EF2-B159-44C5-9089-9F6E30BD6E30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E0E5EF2-B159-44C5-9089-9F6E30BD6E30}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE231B36-3848-4575-9F62-D59F643C8B1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE231B36-3848-4575-9F62-D59F643C8B1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE231B36-3848-4575-9F62-D59F643C8B1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE231B36-3848-4575-9F62-D59F643C8B1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

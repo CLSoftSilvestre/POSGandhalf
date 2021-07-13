@@ -6,7 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ConsoleWidgets\Widgets\Widgets.csproj" />
     <ProjectReference Include="..\POSClasses\POSClasses.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Widgets">
+      <HintPath>Widgets.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
