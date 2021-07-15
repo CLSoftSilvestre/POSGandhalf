@@ -135,7 +135,7 @@ namespace POSGandhalf
             AdminMenuItems.Add(ExitAppMnuItem);
 
             // Created the Menu for administration
-            Menu LoginMnu = new Menu("Admin Menu", AdminMenuItems);
+            Menu LoginMnu = new Menu("Administration Menu", AdminMenuItems);
             LoginMnu.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
 
             // Set the login menu to the Screen and wait for the selection of the user
