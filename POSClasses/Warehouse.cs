@@ -5,7 +5,7 @@ namespace POSClasses
 {
     public class Warehouse
     {
-        private List<Stock> Products { get; set; } = new List<Stock>();
+        public List<Stock> Products { get; set; } = new List<Stock>();
 
         public Warehouse()
         {

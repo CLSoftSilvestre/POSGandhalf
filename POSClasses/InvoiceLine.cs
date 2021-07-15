@@ -12,8 +12,11 @@ namespace POSClasses
             Item = item;
             Quantity = quantity;
 
-            //Desconta a quantidade do stock:
-            Item.RemoveFromStock(quantity);
+            //Remove the quantity from the stock value
+
+            bool success = Item.RemoveFromStock(quantity);
+            if (!success)
+                Quantity = 0;
 
             // Calculate the value per line
             Calculate();
