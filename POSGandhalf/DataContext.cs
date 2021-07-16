@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using POSClasses;
 
-namespace POSGandhalf.Data
+namespace POSGandhalf
 {
     public class DataContext : DbContext
     {
@@ -38,6 +38,38 @@ namespace POSGandhalf.Data
                     UserRole = Role.Administrator
                 }
                 );
+
+            // Create default Product Category
+            modelBuilder.Entity<ProductCategory>().HasData(
+                new ProductCategory()
+                {
+                    Id = 1,
+                    Description = "Mercearia",
+                    SellingUnit = Unit.Kg
+                }
+                );
+
+            // Create default Products
+            modelBuilder.Entity<Product>().HasData(
+                new Product()
+                {
+                    ProductId = 1,
+                    ProductCategoryId = 1,
+                    Name = "Laranjas",
+                    Description = "Laranja do algarve",
+                    Price = 1.35f,
+                },
+
+                new Product()
+                {
+                    ProductId = 2,
+                    ProductCategoryId = 1,
+                    Name = "Maça",
+                    Description = "Maça Golden",
+                    Price = 1.05f
+                }
+
+                ) ;
         }
 
     }
