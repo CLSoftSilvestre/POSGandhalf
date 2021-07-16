@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace POSClasses
 {
     public class ProductCategory
@@ -7,6 +9,7 @@ namespace POSClasses
         public string Description { get; set; }
         public float DefaultTax { get; set; }
         public Unit SellingUnit { get; set; }
+        public ICollection<Product> Products { get; set; }
 
         public ProductCategory()
         {
