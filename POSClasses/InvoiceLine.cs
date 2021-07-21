@@ -3,18 +3,30 @@ namespace POSClasses
 {
     public class InvoiceLine
     {
-        public Stock Item { get; set; }
+        public int Id { get; set; }
+
+        public int StockId { get; set; }
+        public virtual Stock Stock { get; set; }
+
         public float Quantity { get; set; }
         public double Total { get; set; }
 
+        public int InvoiceId { get; set; }
+        public virtual Invoice Invoice { get; set; }
+
+        public InvoiceLine()
+        {
+
+        }
+
         public InvoiceLine(Stock item, float quantity)
         {
-            Item = item;
+            Stock = item;
             Quantity = quantity;
 
             //Remove the quantity from the stock value
 
-            bool success = Item.RemoveFromStock(quantity);
+            bool success = Stock.RemoveFromStock(quantity);
             if (!success)
                 Quantity = 0;
 
@@ -29,7 +41,7 @@ namespace POSClasses
                 if (Quantity < qtd)
                 {
                     //Verify is we have enougth in stock
-                    bool verify = Item.RemoveFromStock(qtd-Quantity);
+                    bool verify = Stock.RemoveFromStock(qtd-Quantity);
 
                     if (verify)
                     {
@@ -45,7 +57,7 @@ namespace POSClasses
 
                 } else
                 {
-                    Item.AddToStock(Quantity - qtd);
+                    Stock.AddToStock(Quantity - qtd);
                     Quantity = qtd;
                     Calculate();
                     return true; 
@@ -56,12 +68,12 @@ namespace POSClasses
 
         public void Calculate()
         {
-            Total = ((Item.Product.Price * Quantity) * Item.Product.Category.DefaultTax) + Item.Product.Price * Quantity;
+            Total = ((Stock.Product.Price * Quantity) * Stock.Product.Category.DefaultTax) + Stock.Product.Price * Quantity;
         }
 
         public override string ToString()
         {
-            return $"Product: {Item.Product.Name}, QTD: {Quantity}, Tax: {Item.Product.Category.DefaultTax}, Total Amount: {Total}";
+            return $"Product: {Stock.Product.Name}, QTD: {Quantity}, Tax: {Stock.Product.Category.DefaultTax}, Total Amount: {Total}";
         }
     }
 }

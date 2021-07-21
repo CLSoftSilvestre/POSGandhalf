@@ -51,34 +51,33 @@ namespace POSGandhalf
 
         }
 
-        static void InvoiceMenu()
+        static void OperationsMenu()
         {
             // Adds one main menu to the app and sets the events
-            List<MenuItem> InvoiceMenuItems = new();
+            List<MenuItem> OperationsMenuItems = new();
 
-            MenuItem NewInvoiceMnuItem = new MenuItem("New Invoice");
-            //LoginMnuItem.Selected += LoginMnuItem_Selected;
-            InvoiceMenuItems.Add(NewInvoiceMnuItem);
+            MenuItem InvoicesMnuItem = new MenuItem("Invoices");
+            InvoicesMnuItem.Selected += InvoicesMnuItem_Selected;
+            OperationsMenuItems.Add(InvoicesMnuItem);
 
             MenuItem ViewStockMnuItem = new MenuItem("View Stock");
             ViewStockMnuItem.Selected += ViewStockMnuItem_Selected;
-            InvoiceMenuItems.Add(ViewStockMnuItem);
+            OperationsMenuItems.Add(ViewStockMnuItem);
 
             //Add Stock Management if User role is administrator or supervisor
             if(User.CurrentUser.UserRole > Role.Operator)
             {
                 MenuItem StockMngMnuItem = new MenuItem("Stock Management");
                 StockMngMnuItem.Selected += StockMngMnuItem_Selected;
-                InvoiceMenuItems.Add(StockMngMnuItem);
-
+                OperationsMenuItems.Add(StockMngMnuItem);
             }
 
             MenuItem BackMnuItem = new MenuItem("Back");
-            BackMnuItem.Selected += BackMnuItem_Selected;
-            InvoiceMenuItems.Add(BackMnuItem);
+            BackMnuItem.Selected += OperationsBackMnuItem_Selected;
+            OperationsMenuItems.Add(BackMnuItem);
 
             // Created the Menu for administration
-            Menu LoginMnu = new Menu("Invoice Menu", InvoiceMenuItems);
+            Menu LoginMnu = new Menu("Operations Menu", OperationsMenuItems);
             LoginMnu.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
 
             // Set the login menu to the Screen and wait for the selection of the user
@@ -88,10 +87,44 @@ namespace POSGandhalf
 
         }
 
-        private static void BackMnuItem_Selected(object sender, EventArgs e)
+        static void InvoicesMenu()
+        {
+            // Adds one main menu to the app and sets the events
+            List<MenuItem> InvoiceMenuItems = new();
+
+            MenuItem NewInvoiceMnuItem = new MenuItem("New Invoice");
+            NewInvoiceMnuItem.Selected += NewInvoiceMnuItem_Selected;
+            InvoiceMenuItems.Add(NewInvoiceMnuItem);
+
+            MenuItem ViewInvoicesMnuItem = new MenuItem("View Invoices");
+            ViewInvoicesMnuItem.Selected += ViewInvoicesMnuItem_Selected;
+            InvoiceMenuItems.Add(ViewInvoicesMnuItem);
+
+            MenuItem BackMnuItem = new MenuItem("Back");
+            BackMnuItem.Selected += InvoicesBackMnuItem_Selected;
+            InvoiceMenuItems.Add(BackMnuItem);
+
+            // Created the Menu for administration
+            Menu InvoiceMnu = new Menu("Invoices Menu", InvoiceMenuItems);
+            InvoiceMnu.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
+
+            // Set the login menu to the Screen and wait for the selection of the user
+            Screen1.Add(InvoiceMnu);
+            Screen1.Render();
+            InvoiceMnu.Select();
+
+        }
+
+        private static void OperationsBackMnuItem_Selected(object sender, EventArgs e)
         {
             //Do noting and get back
             AdministrationMenu();
+        }
+
+        private static void InvoicesBackMnuItem_Selected(object sender, EventArgs e)
+        {
+            //Do noting and get back
+            OperationsMenu();
         }
 
         private static void ExitAppMnuItem_Selected(object sender, EventArgs e)
@@ -146,7 +179,7 @@ namespace POSGandhalf
                     {
                         // User autenticated
                         User.CurrentUser = user;
-                        InvoiceMenu();
+                        OperationsMenu();
                     }
                 }
             }
@@ -341,5 +374,137 @@ namespace POSGandhalf
 
             Screen1.Remove(frm1);
         }
+
+        private static void InvoicesMnuItem_Selected(object sender, EventArgs e)
+        {
+            InvoicesMenu();
+        }
+
+        private static void NewInvoiceMnuItem_Selected(object sender, EventArgs e)
+        {
+
+        }
+
+        private static void ViewInvoicesMnuItem_Selected(object sender, EventArgs e)
+        {
+            // View products list
+            Form frm1 = new Form(110, 25, "View Invoices", Screen1);
+            frm1.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
+
+            Table tbl1 = new Table(90, 19, Screen1);
+            tbl1.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
+            tbl1.Y -= 1;
+
+            //Add headers to the table
+            tbl1.AddColumn(10, "Id");
+            tbl1.AddColumn(20, "Date");
+            tbl1.AddColumn(38, "Client");
+            tbl1.AddColumn(20, "Amount");
+
+            //Add rows to table
+            using (DataContext context = new())
+            {
+                // Loading Associated Product (Eager Loading)
+                // Check: https://docs.microsoft.com/en-us/ef/core/querying/related-data/eager
+
+                var clients = context.Invoices.Include(cli => cli.Customer).ToList();
+
+                foreach (var p in context.Invoices)
+                {
+                    Row line = new Row();
+                    line.AddColumn(10, p.Id.ToString());
+                    line.AddColumn(20, p.InvoiceDate.ToShortDateString());
+                    line.AddColumn(38, p.Customer.FirstName + " " + p.Customer.LastName);
+                    line.AddColumn(20, Invoice.ConvertToMoney(p.TotalAmount));
+                    tbl1.AddRow(line);
+                }
+            }
+
+            frm1.Add(tbl1);
+            Screen1.Add(frm1);
+
+            Screen1.Render();
+
+            // Waits user input
+            string SelectedInvoiceId = tbl1.Select();
+
+            while (SelectedInvoiceId != null)
+            {
+                // TODO: Make code to view the Invoice details
+                Form frmViewInvoice = new Form(115, 28, "View Invoice details", Screen1);
+                frmViewInvoice.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
+
+                // Fields for Invoice data (number, customer, date, etc...)
+                TextBox TxtInvoiceNum = new TextBox(10, 3, 18, "Invoice number");
+                TxtInvoiceNum.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
+
+                TextBox TxtInvoiceDate = new TextBox(30, 3, 18, "Invoice Date");
+                TxtInvoiceDate.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
+
+                TextBox TxtInvoiceCustomer = new TextBox(50, 3, 30, "Customer");
+                TxtInvoiceCustomer.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
+
+                frmViewInvoice.Add(TxtInvoiceNum);
+                frmViewInvoice.Add(TxtInvoiceDate);
+                frmViewInvoice.Add(TxtInvoiceCustomer);
+
+                Table TblDetail = new Table(100, 18, Screen1);
+                TblDetail.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
+                TblDetail.Y += 2;
+                TblDetail.AddColumn(20, "Category");
+                TblDetail.AddColumn(40, "Description");
+                TblDetail.AddColumn(10, "Quantity");
+                TblDetail.AddColumn(10, "Tax");
+                TblDetail.AddColumn(20, "Amount");
+
+                Label lblInfo = new Label(81, 27, "Press one Key to continue...");
+                lblInfo.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
+                frmViewInvoice.Add(lblInfo);
+
+
+                // Get Data from Database and populate Widget fiels
+                using (DataContext context = new())
+                {
+                    // Loading Associated Product (Eager Loading)
+                    // Check: https://docs.microsoft.com/en-us/ef/core/querying/related-data/eager
+
+                    var lines = context.Invoices.Include(lin => lin.Lines).ToList();
+                    var customer = context.Invoices.Include(lin => lin.Customer).ToList();
+                    var stock = context.InvoiceLines.Include(lin => lin.Stock).ToList();
+                    var product = context.Stocks.Include(lin => lin.Product).ToList();
+                    var description = context.Products.Include(lin => lin.Category).ToList();
+
+
+                    Invoice inv = context.Invoices.Find(int.Parse(SelectedInvoiceId));
+
+                    TxtInvoiceNum.Value = inv.Id.ToString();
+                    TxtInvoiceDate.Value = inv.InvoiceDate.ToShortDateString();
+                    TxtInvoiceCustomer.Value = inv.Customer.FirstName + " " + inv.Customer.LastName;
+
+                    foreach (var item in inv.Lines)
+                    {
+                        Row line = new Row();
+                        line.AddColumn(20, item.Stock.Product.Category.Description.ToString());
+                        line.AddColumn(40, item.Stock.Product.Name + " - " + item.Stock.Product.Description);
+                        line.AddColumn(10, item.Quantity.ToString());
+                        line.AddColumn(10, Invoice.ConvertToPercentage(item.Stock.Product.Category.DefaultTax));
+                        line.AddColumn(20, Invoice.ConvertToMoney(item.Total));
+                        TblDetail.AddRow(line);
+                    }
+
+                }
+                frmViewInvoice.Add(TblDetail);
+                Screen1.Add(frmViewInvoice);
+                Screen1.Render();
+                Console.ReadKey();
+                Screen1.Remove(frmViewInvoice);
+                Screen1.Render();
+                SelectedInvoiceId = tbl1.Select();
+            }
+
+            Screen1.Remove(frm1);
+
+        }
+
     }
 }

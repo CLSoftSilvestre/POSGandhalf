@@ -1,7 +1,7 @@
 # POSGandhalf
 Projeto de um sistema POS a executar durante o curso de Desenvolvimento de Software C#
 
-![alt text](https://github.com/CLSoftSilvestre/POSGandhalf/blob/sprint2/POSGandhalf/EditProduct.png?raw=true)
+![alt text](https://github.com/CLSoftSilvestre/POSGandhalf/blob/sprint2/POSGandhalf/ViewInvoice.png?raw=true)
 
 ## Sprint 1
 Objective:

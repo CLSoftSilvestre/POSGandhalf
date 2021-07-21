@@ -1,17 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace POSClasses
 {
     public class Invoice
     {
+        public int Id { get; set; }
         public int InvoiceNumber { get; set; }
+
+        [NotMapped]
         public List<InvoiceLine> InvoiceLines { get; set; } = new List<InvoiceLine>();
-        public Customer InvoiceCustomer { get; set; }
+
+        public virtual IEnumerable<InvoiceLine> Lines { get; set; }
+        public int CustomerId { get; set; }
+        public virtual Customer Customer { get; set; }
+
         public double TotalAmount {get; set;}
-        public DateTime InvoiceDate { get; }
+        public DateTime InvoiceDate { get; set; }
         public bool inProgress { get; set; } = true;
-        public User InvoicedBy { get; set; }
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
 
         public Invoice()
         {
@@ -46,21 +55,21 @@ namespace POSClasses
 
         public void Print()
         {
-            Console.WriteLine($"Client: {InvoiceCustomer.FirstName} {InvoiceCustomer.LastName}");
-            Console.WriteLine($"Address: {InvoiceCustomer.Address}");
-            Console.WriteLine($"Phone: {InvoiceCustomer.Phone}");
-            Console.WriteLine($"VAT: {InvoiceCustomer.VAT}");
+            Console.WriteLine($"Client: {Customer.FirstName} {Customer.LastName}");
+            Console.WriteLine($"Address: {Customer.Address}");
+            Console.WriteLine($"Phone: {Customer.Phone}");
+            Console.WriteLine($"VAT: {Customer.VAT}");
             Console.WriteLine($"Invoice date: { InvoiceDate}");
 
             // Print invoice lines
             Console.WriteLine("Lines");
             for (int x=0; x<InvoiceLines.Count; x++)
             {
-                Console.WriteLine($"Product: {InvoiceLines[x].Item.Product.Name}, Qty: {InvoiceLines[x].Quantity}, Unit: {InvoiceLines[x].Item.Product.Category.SellingUnit}, Price: {ConvertToMoney(InvoiceLines[x].Item.Product.Price)}, Tax: {ConvertToPercentage(InvoiceLines[x].Item.Product.Category.DefaultTax)}, Subtotal: {ConvertToMoney(InvoiceLines[x].Total)}");
+                Console.WriteLine($"Product: {InvoiceLines[x].Stock.Product.Name}, Qty: {InvoiceLines[x].Quantity}, Unit: {InvoiceLines[x].Stock.Product.Category.SellingUnit}, Price: {ConvertToMoney(InvoiceLines[x].Stock.Product.Price)}, Tax: {ConvertToPercentage(InvoiceLines[x].Stock.Product.Category.DefaultTax)}, Subtotal: {ConvertToMoney(InvoiceLines[x].Total)}");
             }
             Console.WriteLine("Total amount: " + ConvertToMoney(TotalAmount));
 
-            Console.WriteLine($"Invoiced by {InvoicedBy.FirstName} {InvoicedBy.LastName}");
+            Console.WriteLine($"Invoiced by {User.FirstName} {User.LastName}");
 
         }
 

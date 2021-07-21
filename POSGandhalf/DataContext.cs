@@ -11,6 +11,9 @@ namespace POSGandhalf
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Stock> Stocks { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<InvoiceLine> InvoiceLines { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -106,6 +109,54 @@ namespace POSGandhalf
                     Quantity = 20,
                     LastUpdate = DateTime.Now,
                 } 
+                );
+
+            // Create default customer
+            modelBuilder.Entity<Customer>().HasData(
+                new Customer()
+                {
+                    Id = 1,
+                    FirstName = "João",
+                    LastName = "Medeiros",
+                    Address = "Rua direita",
+                    City = "Ribeira Grande",
+                    Email = "jmedeiros@jm.pt",
+                    Phone = "999999999",
+                    PostalCode = "9600-123",
+                    VAT = 123123123
+                }
+                );
+
+            // Create default Invoice
+            modelBuilder.Entity<Invoice>().HasData(
+                new Invoice()
+                {
+                    Id = 1,
+                    InvoiceNumber = 1,
+                    CustomerId = 1,
+                    UserId = 1,
+                    InvoiceDate = DateTime.Now,
+                }
+                );
+
+            // Create default Invoice Lines
+            modelBuilder.Entity<InvoiceLine>().HasData(
+                new InvoiceLine()
+                {
+                    Id = 1,
+                    InvoiceId = 1,
+                    StockId = 2,
+                    Quantity = 5,
+                    Total = 100
+                },
+                new InvoiceLine()
+                {
+                    Id = 2,
+                    InvoiceId = 1,
+                    StockId = 1,
+                    Quantity = 3,
+                    Total = 25
+                }
                 );
         }
 
