@@ -12,7 +12,6 @@ namespace POSGandhalf
         public DbSet<Product> Products { get; set; }
         public DbSet<Stock> Stocks { get; set; }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Data Source=127.0.0.1,1433; Initial Catalog=BdPOSGandhalf; User ID=sa; Password=Password1@");
@@ -70,6 +69,25 @@ namespace POSGandhalf
                 }
 
                 ) ;
+
+            // Created default stock
+            modelBuilder.Entity<Stock>().HasData(
+                new Stock()
+                {
+                    Id = 1,
+                    ProductId = 1,
+                    Quantity = 10,
+                    LastUpdate = DateTime.Now,
+                },
+
+                new Stock()
+                {
+                    Id=2,
+                    ProductId = 2,
+                    Quantity = 20,
+                    LastUpdate = DateTime.Now,
+                } 
+                );
         }
 
     }

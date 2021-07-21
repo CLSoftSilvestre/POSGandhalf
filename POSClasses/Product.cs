@@ -13,7 +13,7 @@ namespace POSClasses
         public float Price { get; set; }
         public int ProductCategoryId { get; set; }
         public ProductCategory Category { get; set; }
-        public ICollection<Stock> Stocks { get; set; }
+        public virtual ICollection<Stock> Stocks { get; set; }
 
         public override string ToString()
         {

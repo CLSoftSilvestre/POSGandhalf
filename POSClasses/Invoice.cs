@@ -56,7 +56,7 @@ namespace POSClasses
             Console.WriteLine("Lines");
             for (int x=0; x<InvoiceLines.Count; x++)
             {
-                Console.WriteLine($"Product: {InvoiceLines[x].Item.Article.Name}, Qty: {InvoiceLines[x].Quantity}, Unit: {InvoiceLines[x].Item.Article.Category.SellingUnit}, Price: {ConvertToMoney(InvoiceLines[x].Item.Article.Price)}, Tax: {ConvertToPercentage(InvoiceLines[x].Item.Article.Category.DefaultTax)}, Subtotal: {ConvertToMoney(InvoiceLines[x].Total)}");
+                Console.WriteLine($"Product: {InvoiceLines[x].Item.Product.Name}, Qty: {InvoiceLines[x].Quantity}, Unit: {InvoiceLines[x].Item.Product.Category.SellingUnit}, Price: {ConvertToMoney(InvoiceLines[x].Item.Product.Price)}, Tax: {ConvertToPercentage(InvoiceLines[x].Item.Product.Category.DefaultTax)}, Subtotal: {ConvertToMoney(InvoiceLines[x].Total)}");
             }
             Console.WriteLine("Total amount: " + ConvertToMoney(TotalAmount));
 
