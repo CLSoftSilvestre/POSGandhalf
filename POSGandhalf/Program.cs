@@ -304,9 +304,21 @@ namespace POSGandhalf
                             st.Product.Price = newPriceFloat;
 
                         if (convertStockOk)
-                            st.Quantity = newStockFloat;
-                        // TODO: Needs to update the cell in the table because the data is not refreshed from datatable
+                            st.UpdateQuantity(newStockFloat);
 
+                        // TODO: Needs to update the cell in the table because the data is not refreshed from datatable
+                        //Find the line were the ID is == selectedID
+                        foreach(Row r in tbl1.TableRows)
+                        {
+                            if(r.Columns[0].Title == selectedId)
+                            {
+                                //This is the correct row...
+                                if(convertPriceOk)
+                                    r.Columns[3].Title = Invoice.ConvertToMoney(newPriceFloat);
+                                if(convertStockOk)
+                                    r.Columns[4].Title = newStock;
+                            }
+                        }
 
                         context.SaveChanges();
 

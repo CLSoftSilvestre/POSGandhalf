@@ -19,11 +19,30 @@ namespace POSGandhalf
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Create default user...
+            // Create Admin user...
             modelBuilder.Entity<User>().HasData(
                 new User()
                 {
                     Id = 1,
+                    FirstName = "Admin",
+                    LastName = "Admin",
+                    Address = "NoRoad",
+                    PostalCode = "9500-461",
+                    City = "Ponta Delgada",
+                    Phone = "912345678",
+                    Email = "admin@admin.com",
+                    UserActive = true,
+                    UserLoginName = "admin",
+                    UserPassword = "admin",
+                    UserRole = Role.Administrator
+                }
+                );
+
+            // Create default user...
+            modelBuilder.Entity<User>().HasData(
+                new User()
+                {
+                    Id = 2,
                     FirstName = "Celso",
                     LastName = "Silvestre",
                     Address = "Alameda de Belém",
@@ -34,7 +53,7 @@ namespace POSGandhalf
                     UserActive = true,
                     UserLoginName = "csilvestre",
                     UserPassword = "1234",
-                    UserRole = Role.Administrator
+                    UserRole = Role.Operator
                 }
                 );
 
