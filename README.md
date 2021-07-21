@@ -1,6 +1,8 @@
 # POSGandhalf
 Projeto de um sistema POS a executar durante o curso de Desenvolvimento de Software C#
 
+![alt text](https://github.com/CLSoftSilvestre/POSGandhalf/blob/sprint2/POSGandhalf/EditProduct.png?raw=true)
+
 ## Sprint 1
 Objective:
 Our Customer “Gandalf Inc.” needs to implement a new POS solution. This customer has several stores where they sell a diversified range of necessity goods.
@@ -25,3 +27,9 @@ Use a console application to test your classes.
 ## Sprint 2
 Integration of SQL Server database
 Usage of Console Widgets to create visual app.
+
+![alt text](https://github.com/CLSoftSilvestre/POSGandhalf/blob/sprint2/POSGandhalf/AdminMenu.png?raw=true)
+
+![alt text](https://github.com/CLSoftSilvestre/POSGandhalf/blob/sprint2/POSGandhalf/InvoiceMenu.png?raw=true)
+
+![alt text](https://github.com/CLSoftSilvestre/POSGandhalf/blob/sprint2/POSGandhalf/EditProduct.png?raw=true)
