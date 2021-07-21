@@ -12,6 +12,7 @@ namespace POSClasses
 
         // Static variable and properties
         private static bool UserHasLogin;
+        public static User CurrentUser;
 
         // Class Methods
         public User()

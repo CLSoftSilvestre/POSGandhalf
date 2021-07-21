@@ -56,12 +56,12 @@ namespace POSClasses
 
         public void Calculate()
         {
-            Total = ((Item.Article.Price * Quantity) * Item.Article.Category.DefaultTax) + Item.Article.Price * Quantity;
+            Total = ((Item.Product.Price * Quantity) * Item.Product.Category.DefaultTax) + Item.Product.Price * Quantity;
         }
 
         public override string ToString()
         {
-            return $"Product: {Item.Article.Name}, QTD: {Quantity}, Tax: {Item.Article.Category.DefaultTax}, Total Amount: {Total}";
+            return $"Product: {Item.Product.Name}, QTD: {Quantity}, Tax: {Item.Product.Category.DefaultTax}, Total Amount: {Total}";
         }
     }
 }

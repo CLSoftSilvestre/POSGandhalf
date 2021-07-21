@@ -4,7 +4,8 @@ namespace POSClasses
     public class Stock
     {
         public int Id { get; set; }
-        public Product Article { get; set; }
+        public int ProductId { get; set; }
+        public virtual Product Product { get; set; }
         public float Quantity { get; set; }
         public DateTime LastUpdate { get; set; }
 
