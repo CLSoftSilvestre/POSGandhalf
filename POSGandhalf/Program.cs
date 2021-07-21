@@ -164,21 +164,30 @@ namespace POSGandhalf
             tbl1.Y -= 1;
 
             //Add headers to the table
-            tbl1.AddColumn(10, "Id");
+            tbl1.AddColumn(5, "Id");
             tbl1.AddColumn(20, "Product name");
             tbl1.AddColumn(38, "Description");
-            tbl1.AddColumn(20, "Price");
+            tbl1.AddColumn(15, "Price");
+            tbl1.AddColumn(10, "Qty.");
 
             //Add rows to table
-            using(DataContext context = new())
+            using (DataContext context = new())
             {
-                foreach (var p in context.Products)
+                // Loading Associated Product (Eager Loading)
+                // Check: https://docs.microsoft.com/en-us/ef/core/querying/related-data/eager
+
+                var products = context.Stocks
+                    .Include(prod => prod.Product)
+                    .ToList();
+
+                foreach (var p in context.Stocks)
                 {
                     Row line = new Row();
-                    line.AddColumn(10, p.ProductId.ToString());
-                    line.AddColumn(20, p.Name);
-                    line.AddColumn(38, p.Description);
-                    line.AddColumn(20, Invoice.ConvertToMoney(p.Price));
+                    line.AddColumn(5, p.ProductId.ToString());
+                    line.AddColumn(20, p.Product.Name);
+                    line.AddColumn(38, p.Product.Description);
+                    line.AddColumn(20, Invoice.ConvertToMoney(p.Product.Price));
+                    line.AddColumn(10, p.Quantity.ToString());
                     tbl1.AddRow(line);
                 }
             }

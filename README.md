@@ -21,3 +21,7 @@ Some of the rules that you need to consider:
 - Before a sale is paid it must allow edit the quantity of products or delete lines
 - Print a receipt after payment is done.
 Use a console application to test your classes.
+
+## Sprint 2
+Integration of SQL Server database
+Usage of Console Widgets to create visual app.
