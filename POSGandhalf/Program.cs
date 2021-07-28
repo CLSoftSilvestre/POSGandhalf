@@ -36,12 +36,12 @@ namespace POSGandhalf
             LoginMnuItem.Selected += LoginMnuItem_Selected;
             AdminMenuItems.Add(LoginMnuItem);
 
-            MenuItem ExitAppMnuItem = new MenuItem("Exit application");
+            MenuItem ExitAppMnuItem = new MenuItem("Sair aplicação");
             ExitAppMnuItem.Selected += ExitAppMnuItem_Selected;
             AdminMenuItems.Add(ExitAppMnuItem);
 
             // Created the Menu for administration
-            Menu LoginMnu = new Menu("Administration Menu", AdminMenuItems);
+            Menu LoginMnu = new Menu("Menu administração", AdminMenuItems);
             LoginMnu.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
 
             // Set the login menu to the Screen and wait for the selection of the user
@@ -56,28 +56,28 @@ namespace POSGandhalf
             // Adds one main menu to the app and sets the events
             List<MenuItem> OperationsMenuItems = new();
 
-            MenuItem InvoicesMnuItem = new MenuItem("Invoices");
+            MenuItem InvoicesMnuItem = new MenuItem("Faturas");
             InvoicesMnuItem.Selected += InvoicesMnuItem_Selected;
             OperationsMenuItems.Add(InvoicesMnuItem);
 
-            MenuItem ViewStockMnuItem = new MenuItem("View Stock");
+            MenuItem ViewStockMnuItem = new MenuItem("Ver Stock");
             ViewStockMnuItem.Selected += ViewStockMnuItem_Selected;
             OperationsMenuItems.Add(ViewStockMnuItem);
 
             //Add Stock Management if User role is administrator or supervisor
             if(User.CurrentUser.UserRole > Role.Operator)
             {
-                MenuItem StockMngMnuItem = new MenuItem("Stock Management");
+                MenuItem StockMngMnuItem = new MenuItem("Gestão de Stock");
                 StockMngMnuItem.Selected += StockMngMnuItem_Selected;
                 OperationsMenuItems.Add(StockMngMnuItem);
             }
 
-            MenuItem BackMnuItem = new MenuItem("Back");
+            MenuItem BackMnuItem = new MenuItem("Voltar");
             BackMnuItem.Selected += OperationsBackMnuItem_Selected;
             OperationsMenuItems.Add(BackMnuItem);
 
             // Created the Menu for administration
-            Menu LoginMnu = new Menu("Operations Menu", OperationsMenuItems);
+            Menu LoginMnu = new Menu("Menu operações", OperationsMenuItems);
             LoginMnu.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
 
             // Set the login menu to the Screen and wait for the selection of the user
@@ -92,20 +92,20 @@ namespace POSGandhalf
             // Adds one main menu to the app and sets the events
             List<MenuItem> InvoiceMenuItems = new();
 
-            MenuItem NewInvoiceMnuItem = new MenuItem("New Invoice");
+            MenuItem NewInvoiceMnuItem = new MenuItem("Nova fatura");
             NewInvoiceMnuItem.Selected += NewInvoiceMnuItem_Selected;
             InvoiceMenuItems.Add(NewInvoiceMnuItem);
 
-            MenuItem ViewInvoicesMnuItem = new MenuItem("View Invoices");
+            MenuItem ViewInvoicesMnuItem = new MenuItem("Ver faturas");
             ViewInvoicesMnuItem.Selected += ViewInvoicesMnuItem_Selected;
             InvoiceMenuItems.Add(ViewInvoicesMnuItem);
 
-            MenuItem BackMnuItem = new MenuItem("Back");
+            MenuItem BackMnuItem = new MenuItem("Voltar");
             BackMnuItem.Selected += InvoicesBackMnuItem_Selected;
             InvoiceMenuItems.Add(BackMnuItem);
 
             // Created the Menu for administration
-            Menu InvoiceMnu = new Menu("Invoices Menu", InvoiceMenuItems);
+            Menu InvoiceMnu = new Menu("Menu faturas", InvoiceMenuItems);
             InvoiceMnu.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
 
             // Set the login menu to the Screen and wait for the selection of the user
@@ -139,7 +139,7 @@ namespace POSGandhalf
             frmLogin.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
 
             // Draw TextBoxes for UserName and Password
-            TextBox txtUsername = new TextBox(50, 11, 20, "Username");
+            TextBox txtUsername = new TextBox(50, 11, 20, "Utilizador");
             txtUsername.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
             frmLogin.Add(txtUsername);
 
@@ -165,14 +165,14 @@ namespace POSGandhalf
 
                 if (user == null)
                 {
-                    MsgBox msgNoUser = new MsgBox("Login error", "User not found...");
+                    MsgBox msgNoUser = new MsgBox("Erro de login", "Utilizador não encontrado...");
                     msgNoUser.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
                     msgNoUser.Show(Screen1);
                 } else
                 {
                     if(user.UserPassword != Password)
                     {
-                        MsgBox msgWrongPass = new MsgBox("Login error", "Wrong password...");
+                        MsgBox msgWrongPass = new MsgBox("Erro de login", "Password errada...");
                         msgWrongPass.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
                         msgWrongPass.Show(Screen1);
                     } else
@@ -189,7 +189,7 @@ namespace POSGandhalf
         private static void ViewStockMnuItem_Selected(object sender, EventArgs e)
         {
             // View products list
-            Form frm1 = new Form(110, 25, "View products", Screen1);
+            Form frm1 = new Form(110, 25, "Ver produtos", Screen1);
             frm1.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
 
             Table tbl1 = new Table(90, 19, Screen1);
@@ -198,10 +198,10 @@ namespace POSGandhalf
 
             //Add headers to the table
             tbl1.AddColumn(5, "Id");
-            tbl1.AddColumn(20, "Product name");
-            tbl1.AddColumn(38, "Description");
-            tbl1.AddColumn(15, "Price");
-            tbl1.AddColumn(10, "Qty.");
+            tbl1.AddColumn(20, "Nome produto");
+            tbl1.AddColumn(38, "Descrição");
+            tbl1.AddColumn(15, "Preço");
+            tbl1.AddColumn(10, "Qtd.");
 
             //Add rows to table
             using (DataContext context = new())
@@ -239,7 +239,7 @@ namespace POSGandhalf
         private static void StockMngMnuItem_Selected(object sender, EventArgs e)
         {
             // View products list
-            Form frm1 = new Form(110, 25, "Stock management", Screen1);
+            Form frm1 = new Form(110, 25, "Gestão de stock", Screen1);
             frm1.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
 
             Table tbl1 = new Table(90, 19, Screen1);
@@ -248,10 +248,10 @@ namespace POSGandhalf
 
             //Add headers to the table
             tbl1.AddColumn(5, "Id");
-            tbl1.AddColumn(20, "Product name");
-            tbl1.AddColumn(38, "Description");
-            tbl1.AddColumn(15, "Price");
-            tbl1.AddColumn(10, "Qty.");
+            tbl1.AddColumn(20, "Nome produto");
+            tbl1.AddColumn(38, "Descrição");
+            tbl1.AddColumn(15, "Preço");
+            tbl1.AddColumn(10, "Qtd.");
 
             //Add rows to table
             using (DataContext context = new())
@@ -287,18 +287,18 @@ namespace POSGandhalf
             while ( selectedId != null)
             {
                 // Create new Form to edit the product stock and price.
-                Form frmEditProduct = new Form(50, 20, "Edit product", Screen1);
+                Form frmEditProduct = new Form(50, 20, "Editar produto", Screen1);
                 frmEditProduct.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
 
                 TextBox txtProductId = new TextBox(50, 8, 10, "Id");
                 txtProductId.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
                 txtProductId.Value = selectedId;
 
-                TextBox txtProductName = new TextBox(50, 12, 15, "Product");
+                TextBox txtProductName = new TextBox(50, 12, 15, "Produto");
                 txtProductName.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
                 txtProductName.Value = selectedId;
 
-                TextBox txtProductPrice = new TextBox(50, 16, 10, "Price");
+                TextBox txtProductPrice = new TextBox(50, 16, 10, "Preço");
                 txtProductPrice.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
                 txtProductPrice.Value = selectedId;
 
@@ -388,7 +388,7 @@ namespace POSGandhalf
         private static void ViewInvoicesMnuItem_Selected(object sender, EventArgs e)
         {
             // View products list
-            Form frm1 = new Form(110, 25, "View Invoices", Screen1);
+            Form frm1 = new Form(110, 25, "Ver faturas", Screen1);
             frm1.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
 
             Table tbl1 = new Table(90, 19, Screen1);
@@ -397,9 +397,9 @@ namespace POSGandhalf
 
             //Add headers to the table
             tbl1.AddColumn(10, "Id");
-            tbl1.AddColumn(20, "Date");
-            tbl1.AddColumn(38, "Client");
-            tbl1.AddColumn(20, "Amount");
+            tbl1.AddColumn(20, "Data");
+            tbl1.AddColumn(38, "Cliente");
+            tbl1.AddColumn(20, "Valor");
 
             //Add rows to table
             using (DataContext context = new())
@@ -431,17 +431,17 @@ namespace POSGandhalf
             while (SelectedInvoiceId != null)
             {
                 // TODO: Make code to view the Invoice details
-                Form frmViewInvoice = new Form(115, 28, "View Invoice details", Screen1);
+                Form frmViewInvoice = new Form(115, 28, "Ver detalhes fatura", Screen1);
                 frmViewInvoice.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
 
                 // Fields for Invoice data (number, customer, date, etc...)
-                TextBox TxtInvoiceNum = new TextBox(10, 3, 18, "Invoice number");
+                TextBox TxtInvoiceNum = new TextBox(10, 3, 18, "Num. fatura");
                 TxtInvoiceNum.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
 
-                TextBox TxtInvoiceDate = new TextBox(30, 3, 18, "Invoice Date");
+                TextBox TxtInvoiceDate = new TextBox(30, 3, 18, "Data fatura");
                 TxtInvoiceDate.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
 
-                TextBox TxtInvoiceCustomer = new TextBox(50, 3, 30, "Customer");
+                TextBox TxtInvoiceCustomer = new TextBox(50, 3, 30, "Cliente");
                 TxtInvoiceCustomer.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
 
                 frmViewInvoice.Add(TxtInvoiceNum);
@@ -451,13 +451,13 @@ namespace POSGandhalf
                 Table TblDetail = new Table(100, 18, Screen1);
                 TblDetail.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
                 TblDetail.Y += 2;
-                TblDetail.AddColumn(20, "Category");
-                TblDetail.AddColumn(40, "Description");
-                TblDetail.AddColumn(10, "Quantity");
-                TblDetail.AddColumn(10, "Tax");
-                TblDetail.AddColumn(20, "Amount");
+                TblDetail.AddColumn(20, "Categoria");
+                TblDetail.AddColumn(40, "Descrição");
+                TblDetail.AddColumn(10, "QTD.");
+                TblDetail.AddColumn(10, "IVA");
+                TblDetail.AddColumn(20, "Valor");
 
-                Label lblInfo = new Label(81, 27, "Press one Key to continue...");
+                Label lblInfo = new Label(81, 27, "Prima uma tecla para continuar...");
                 lblInfo.SetColors(PRIMARY_COLOR, SECONDARY_COLOR);
                 frmViewInvoice.Add(lblInfo);
 

@@ -12,7 +12,7 @@ namespace POSClasses
         [NotMapped]
         public List<InvoiceLine> InvoiceLines { get; set; } = new List<InvoiceLine>();
 
-        public virtual IEnumerable<InvoiceLine> Lines { get; set; }
+        public virtual ICollection<InvoiceLine> Lines { get; set; }
         public int CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
 
